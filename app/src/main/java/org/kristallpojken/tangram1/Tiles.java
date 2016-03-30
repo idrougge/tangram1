@@ -11,7 +11,6 @@ public enum Tiles {
     _empty(0,"︎◻︎"),_90deg(1,"◥"),_180deg(2,"◢"),_270deg(3,"◣"),_360deg(4,"◤"),_full(5,"█");
     private final int nr;
     private final String text;
-    //public static ArrayList<Tiles> tiles=new ArrayList<Tiles>();
     public static Tiles[] tiles = new Tiles[Tiles.values().length];
     static{
         int i=0;
@@ -20,13 +19,6 @@ public enum Tiles {
             tiles[i++]=tile;
         }
     }
-    /*static{
-        for (Tiles tile: Tiles.values())
-        {
-            Log.i("Tiles",tile.toString());
-            tiles.add(tile);
-        }
-    }*/
     Tiles(int nr, String text)
     {
         this.nr=nr;
@@ -39,6 +31,13 @@ public enum Tiles {
     public String text()
     {
         return text;
+    }
+    public Tiles withNr(int nr)
+    {
+        if(nr<=Tiles.values().length)
+            return tiles[nr];
+        else
+            Log.e("Tiles","Ogiltigt tal vid hämtning av ruta!");
     }
     public String toString()
     {

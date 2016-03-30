@@ -26,8 +26,20 @@ public class PlayField {
         field=new Tiles[tiles.length];
         for (int i=0;i<tiles.length;i++)
         {
-            //field[i]=Tiles(tiles[i]);
-
+            field[i]=Tiles.withNr(tiles[i]);
+            Log.i("PlayField","Hämtade ruta "+i+": "+field[i]);
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str=new StringBuilder();
+        for (int i = 0; i < field.length; i++)
+        {
+            if (i % MINCOLS==0)
+                str.append("\t");
+            str.append(field[i].text());
+        }
+        return str.toString();
     }
 }

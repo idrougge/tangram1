@@ -32,13 +32,15 @@ public enum Tiles {
     {
         return text;
     }
-    public Tiles withNr(int nr)
+    public static Tiles withNr(int nr)
     {
         if(nr<=Tiles.values().length)
             return tiles[nr];
         else
             Log.e("Tiles","Ogiltigt tal vid hämtning av ruta!");
+        return null;
     }
+    @Override
     public String toString()
     {
         return "Ruta med nr "+nr+": "+text;

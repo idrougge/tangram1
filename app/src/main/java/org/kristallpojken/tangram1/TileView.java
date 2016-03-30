@@ -20,6 +20,7 @@ public class TileView extends ImageView {
     TileView(Tiles tile)
     {
         this();
-        this.setImageDrawable(context.getDrawable(R.drawable.rutahel));
+        //this.setImageDrawable(context.getDrawable(R.drawable.rutahel));
+        this.setImageDrawable(tile.getDrawable(context));
     }
 }

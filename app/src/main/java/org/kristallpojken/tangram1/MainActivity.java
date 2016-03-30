@@ -18,11 +18,16 @@ public class MainActivity extends AppCompatActivity {
         int värden[]={1,2,3,4,5,0,5,4,3,2,1,0};
         PlayField fält=new PlayField(värden);
         //Log.i("Main","fält: \n"+fält);
+        ViewGroup.LayoutParams lp=new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         TileView.context=this;              // Lägg in vår kontext i TileView-klassen
         TileView urk=new TileView();
         this.addContentView(urk,new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
+        TileView hick=new TileView(fält.field[3]);
+        addContentView(hick,lp);
         /*
         for (Tiles tile:fält.field)
         {

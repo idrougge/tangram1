@@ -6,7 +6,9 @@ import android.util.Log;
  * Spelfältet är ett rutnät om åtm. 3 x 3 rutor
  */
 public class PlayField {
-    static final private int MINTILES=9;
+    static final private int MINROWS=3;
+    static final private int MINCOLS=3;
+    static final private int MINTILES=MINROWS*MINCOLS;
     Tiles field[];
     PlayField(Tiles[] tiles)
     {
@@ -20,10 +22,12 @@ public class PlayField {
             Log.e("PlayField","Fel vid init: Antalet rutor får inte vara mindre än "+MINTILES+"!");
             return;
         }
+        Log.i("PlayField","Skapar spelfält med "+tiles.length+" rutor.");
         field=new Tiles[tiles.length];
         for (int i=0;i<tiles.length;i++)
         {
-            field[i]=new Tiles(tiles[i]);
+            //field[i]=Tiles(tiles[i]);
+
         }
     }
 }

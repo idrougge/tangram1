@@ -7,8 +7,8 @@ import android.util.Log;
  */
 public class PlayField {
     static final private int MINTILES=9;
-    TileTypes field[];
-    PlayField(TileTypes[] tiles)
+    Tiles field[];
+    PlayField(Tiles[] tiles)
     {
         Log.i("PlayField","Skapar spelfält med "+tiles.length+" rutor.");
         field=tiles.clone();
@@ -20,6 +20,10 @@ public class PlayField {
             Log.e("PlayField","Fel vid init: Antalet rutor får inte vara mindre än "+MINTILES+"!");
             return;
         }
-
+        field=new Tiles[tiles.length];
+        for (int i=0;i<tiles.length;i++)
+        {
+            field[i]=new Tiles(tiles[i]);
+        }
     }
 }

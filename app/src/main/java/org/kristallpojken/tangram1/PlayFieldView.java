@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 /**
  * Skapar layout för rutnätet där pusselbitarna läggs ut
  */
-public class PlayFieldView extends LinearLayout{
+public class PlayFieldView extends ViewGroup{
     int tileWidth;
     int tileHeight;
     int layoutWidth;
@@ -55,14 +55,14 @@ public class PlayFieldView extends LinearLayout{
         Log.i("PlayFieldView","MeasureSpec har storlek "+specWidth+"x"+specHeight);
         Log.i("PlayFieldView","MainLayout har storlek "+parent.getMeasuredWidth()+"x"+parent.getMeasuredHeight());
         Log.i("PlayFieldView", "Kör measure()");
-        this.measure(0,0);
-        Log.i("PlayFieldView","Skapar spelplan med storlek "+layoutWidth+"x"+layoutHeight);
+        this.measure(0, 0);
+        Log.i("PlayFieldView", "Skapar spelplan med storlek " + layoutWidth + "x" + layoutHeight);
         Log.i("PlayFieldView","MeasureSpec har storlek "+specWidth+"x"+specHeight);
         Log.i("PlayFieldView","MainLayout har storlek "+parent.getMeasuredWidth()+"x"+parent.getMeasuredHeight());
-        addView(new TileView(Tiles._360deg));
-        addView(new TileView(Tiles._270deg));
-        addView(new TileView(Tiles._180deg));
-        addView(new TileView(Tiles._90deg));
+        for(int i=0;i<pf.field.length;i++)
+        {
+            addView(new TileView(pf.field[i]));
+        }
     }
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom)
@@ -76,14 +76,15 @@ public class PlayFieldView extends LinearLayout{
         int tileLeft=left+this.getPaddingLeft();
         Log.i("onLayout","Hittade "+childCount+" barn");
         for(int i=0; i<childCount; i++) {
-            TileView child=(TileView)getChildAt(i);
-            Log.i("onLayout","Bearbetar barn nr "+i+" med stl "+tileWidth+" på pos "+tileLeft);
-            child.layout(tileLeft,top,tileLeft+=tileWidth,bottom);
-            if(i%cols==0)
+            if( (i>0) && (i % cols == 0) )
             {
                 tileLeft=this.getPaddingLeft();
-                bottom+=tileWidth;
+                top+=tileWidth;
             }
+            TileView child=(TileView)getChildAt(i);
+            Log.i("onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
+            child.layout(tileLeft,top,tileLeft+=tileWidth,top+tileWidth);
+
         }
     }
     @Override

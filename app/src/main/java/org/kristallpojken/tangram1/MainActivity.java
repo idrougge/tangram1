@@ -4,10 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,28 +16,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         /*---------------------------------------------*/
-        Tiles bla=Tiles._180deg;
-        Log.i("Main","Tile 5: "+Tiles.tiles[5]);
-        int värden[]={1,2,3,4,5,0,5,4,3,2,1,0};
-        PlayField fält=new PlayField(värden);
-        //Log.i("Main","fält: \n"+fält);
+        int puzzle[]={1,2,3,
+                      4,5,0,
+                      5,4,3};
+        PlayField pf =new PlayField(puzzle);
+
         ViewGroup.LayoutParams lp=new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         TileView.context=this;              // Lägg in vår kontext i TileView-klassen
         TileView urk=new TileView();
-        this.addContentView(urk, new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-        TileView hick=new TileView(fält.field[3]);
+        //this.addContentView(urk, new ViewGroup.LayoutParams(
+        //        ViewGroup.LayoutParams.WRAP_CONTENT,
+        //        ViewGroup.LayoutParams.WRAP_CONTENT));
+        TileView hick=new TileView(pf.field[3]);
         Log.i("Main","Hick: "+hick.getWidth()+"x"+hick.getHeight());
         Log.i("Main", "Hick: " + hick.getMeasuredWidth() + "x" + hick.getMeasuredHeight());
-        addContentView(hick, lp);
+        //addContentView(hick, lp);
         Log.i("Main", "Hick: " + hick.getWidth() + "x" + hick.getHeight());
         Log.i("Main", "Hick: " + hick.getMeasuredWidth() + "x" + hick.getMeasuredHeight());
 
-        RelativeLayout mainLayout=(RelativeLayout)findViewById(R.id.main_layout);
-        PlayFieldView pfv=new PlayFieldView(this,mainLayout);
+        LinearLayout mainLayout=(LinearLayout)findViewById(R.id.main_layout);
+        //PlayFieldView pfv=(PlayFieldView)findViewById(R.id.game_layout);
+        PlayFieldView pfv=new PlayFieldView(this, mainLayout, pf);
         Log.i("Main","Storlek: "+mainLayout.getWidth()+"x"+mainLayout.getHeight());
         Log.i("Main","Storlek: "+mainLayout.getMeasuredWidth()+"x"+mainLayout.getMeasuredHeight());
         Log.i("Main", "Hick: " + hick.getWidth() + "x" + hick.getHeight());

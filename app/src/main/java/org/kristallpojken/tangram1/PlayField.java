@@ -9,6 +9,8 @@ public class PlayField {
     static final private int MINROWS=3;
     static final private int MINCOLS=3;
     static final private int MINTILES=MINROWS*MINCOLS;
+    public int rows=MINROWS;
+    public int cols=MINROWS;
     Tiles field[];
     PlayField(Tiles[] tiles)
     {
@@ -22,6 +24,12 @@ public class PlayField {
             Log.e("PlayField","Fel vid init: Antalet rutor får inte vara mindre än "+MINTILES+"!");
             return;
         }
+        if(tiles.length%Math.sqrt(tiles.length)!=0)
+        {
+            Log.e("PlayField","Fel vid init: Antalet rutor måste vara jämnt delbart");
+            Log.e("PlayField",""+tiles.length+"="+tiles.length%Math.sqrt(tiles.length));
+            return;
+        }
         Log.i("PlayField","Skapar spelfält med "+tiles.length+" rutor.");
         field=new Tiles[tiles.length];
         for (int i=0;i<tiles.length;i++)
@@ -29,6 +37,7 @@ public class PlayField {
             field[i]=Tiles.withNr(tiles[i]);
             Log.i("PlayField","Hämtade ruta "+i+": "+field[i]);
         }
+        cols=rows=(int)Math.sqrt(tiles.length);
     }
 
     @Override

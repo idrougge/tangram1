@@ -12,27 +12,22 @@ import android.widget.LinearLayout;
  * Skapar layout för rutnätet där pusselbitarna läggs ut
  */
 public class PlayFieldView extends ViewGroup{
+    /*---- Variabler ------------------------------------------------------------*/
     int tileWidth;
     int tileHeight;
     int layoutWidth;
     int layoutHeight;
     private int cols=3;
     private int rows=3;
-    PlayFieldView(Context context)
+    final private LayoutParams layoutParams=new LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT);
+    /*---- Konstruktorer ------------------------------------------------------------*/
+    PlayFieldView(Context context)                      // Meningslös konstruktor
     {
         super(context);
     }
-    /*
-    PlayFieldView(Context context, AttributeSet attrs, int defStyleAttr)
-    {
-        super(context,attrs,defStyleAttr);
-    }
-    PlayFieldView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
-        super(context,attrs,defStyleAttr,defStyleRes);
-    }
-    */
-    PlayFieldView(Context context, AttributeSet attrs)
+    PlayFieldView(Context context, AttributeSet attrs)  // s o
     {
         super(context,attrs);
     }
@@ -42,37 +37,24 @@ public class PlayFieldView extends ViewGroup{
         cols=pf.cols;
         rows=pf.rows;
         Log.i("PlayFieldView","Skapar spelplan med storlek "+cols+"x"+rows+" rutor");
-        this.setLayoutParams(new LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-        layoutWidth=getWidth();
-        layoutHeight=getHeight();
-        int specWidth=MeasureSpec.makeMeasureSpec(0,MeasureSpec.UNSPECIFIED);
-        int specHeight=MeasureSpec.makeMeasureSpec(0,MeasureSpec.UNSPECIFIED);
-        parent.measure(specWidth, specHeight);
-        //parent.measure(layoutWidth,layoutHeight);
-        Log.i("PlayFieldView","Skapar spelplan med storlek "+layoutWidth+"x"+layoutHeight);
-        Log.i("PlayFieldView","MeasureSpec har storlek "+specWidth+"x"+specHeight);
-        Log.i("PlayFieldView","MainLayout har storlek "+parent.getMeasuredWidth()+"x"+parent.getMeasuredHeight());
-        Log.i("PlayFieldView", "Kör measure()");
-        this.measure(0, 0);
-        Log.i("PlayFieldView", "Skapar spelplan med storlek " + layoutWidth + "x" + layoutHeight);
-        Log.i("PlayFieldView","MeasureSpec har storlek "+specWidth+"x"+specHeight);
-        Log.i("PlayFieldView","MainLayout har storlek "+parent.getMeasuredWidth()+"x"+parent.getMeasuredHeight());
+        this.setLayoutParams(layoutParams);
+        this.setPadding(20,20,20,20);
         for(int i=0;i<pf.field.length;i++)
         {
             addView(new TileView(pf.field[i]));
         }
     }
+    /*---- Metoder ------------------------------------------------------------*/
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom)
     {
         Log.i("onLayout","onLayout anropades med argument "+changed+","+left+","+top+","+right+","+bottom);
-        layoutWidth=this.getMeasuredWidth();
-        layoutHeight=this.getMeasuredHeight();
+        layoutWidth=this.getMeasuredWidth()-this.getPaddingLeft()-this.getPaddingRight();
+        layoutHeight=this.getMeasuredHeight()-this.getPaddingTop()-this.getPaddingBottom();
+        top+=getPaddingTop();
         Log.i("onLayout","PlayFieldView har storlek "+layoutWidth+"x"+layoutHeight);
         int childCount=getChildCount();
-        tileWidth=layoutWidth/cols;
+        tileHeight=tileWidth=layoutWidth/cols;
         int tileLeft=left+this.getPaddingLeft();
         Log.i("onLayout","Hittade "+childCount+" barn");
         for(int i=0; i<childCount; i++) {
@@ -83,8 +65,7 @@ public class PlayFieldView extends ViewGroup{
             }
             TileView child=(TileView)getChildAt(i);
             Log.i("onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
-            child.layout(tileLeft,top,tileLeft+=tileWidth,top+tileWidth);
-
+            child.layout(tileLeft,top,tileLeft+=tileWidth,top+tileHeight);
         }
     }
     @Override

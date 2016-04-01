@@ -1,11 +1,15 @@
 package org.kristallpojken.tangram1;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
 /**
@@ -19,6 +23,7 @@ public class PlayFieldView extends ViewGroup{
     int layoutHeight;
     private int cols=3;
     private int rows=3;
+    PlayField playField;
     final private LayoutParams layoutParams=new LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -34,6 +39,7 @@ public class PlayFieldView extends ViewGroup{
     PlayFieldView(Context context,View parent,PlayField pf)
     {
         super(context);
+        playField=pf;
         cols=pf.cols;
         rows=pf.rows;
         Log.i("PlayFieldView","Skapar spelplan med storlek "+cols+"x"+rows+" rutor");
@@ -55,8 +61,8 @@ public class PlayFieldView extends ViewGroup{
         Log.i("onLayout","PlayFieldView har storlek "+layoutWidth+"x"+layoutHeight);
         int childCount=getChildCount();
         tileHeight=tileWidth=layoutWidth/cols;
-        int tileLeft=left+this.getPaddingLeft();
-        Log.i("onLayout","Hittade "+childCount+" barn");
+        int tileLeft=left+getPaddingLeft();
+        Log.i("onLayout", "Hittade " + childCount + " barn");
         for(int i=0; i<childCount; i++) {
             if( (i>0) && (i % cols == 0) )
             {
@@ -64,8 +70,40 @@ public class PlayFieldView extends ViewGroup{
                 top+=tileWidth;
             }
             TileView child=(TileView)getChildAt(i);
+            child.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TileView tile=(TileView)v;
+                    Log.i("PlayFieldView", "Mottog ett klick");
+                    PlayFieldView pfv=(PlayFieldView)tile.getParent();
+                    Log.i("PlayFieldView", "Identifierade modern med "+pfv.getChildCount()+" barn");
+                    int tilenr=-1;
+                    for(int i=0;i<pfv.getChildCount();i++)
+                    {
+                        Log.i("PlayFieldView", "Letar efter barnet... "+i);
+                        if(pfv.getChildAt(i)==tile)
+                        {
+                            Log.i("PlayFieldView", "Hittade barnet på nr "+i);
+                            tilenr=i;
+                            break;
+                        }
+                        //Log.e("PlayFieldView", "Hittade inte barnet!");
+                    }
+                    Log.i("PlayFieldView", "Hittade barnet på nr " + tilenr);
+                    //tile.setImageDrawable(playField.field[tilenr+1].getDrawable(getContext()));
+                    Tiles newTile=playField.field[tilenr];
+                    Log.i("PlayFieldView", "Barnet är "+newTile);
+                    //newTile=Tiles.withNr(newTile.nr()+1);
+                    newTile=newTile.next();
+                    Log.i("PlayFieldView", "Barnet blev "+newTile);
+                    tile.setImageDrawable(newTile.getDrawable(getContext()));
+                    playField.field[tilenr]=newTile;
+                    //tile.setImageDrawable(playField.field[tilenr].getDrawable())
+                    //tile.setImageDrawable(getContext().getDrawable(R.drawable.rutahel));
+                }
+            });
             Log.i("onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
-            child.layout(tileLeft,top,tileLeft+=tileWidth,top+tileHeight);
+            child.layout(tileLeft, top, tileLeft += tileWidth, top + tileHeight);
         }
     }
     @Override

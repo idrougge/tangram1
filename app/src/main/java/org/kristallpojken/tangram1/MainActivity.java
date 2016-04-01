@@ -18,7 +18,9 @@ public class MainActivity extends AppCompatActivity {
         /*---------------------------------------------*/
         int puzzle[]={1,2,3,
                       4,5,0,
-                      5,4,3};
+                      5,4,3,
+        2,2,1,
+        5,2,3,4};
         PlayField pf =new PlayField(puzzle);
 
         ViewGroup.LayoutParams lp=new ViewGroup.LayoutParams(

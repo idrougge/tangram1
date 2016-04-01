@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
-import java.util.ArrayList;
-
 /**
  * Spelet har sex rutor: Tom, ifylld och halvifylld roterad i 90-graderssteg
  */
@@ -49,6 +47,13 @@ public enum Tiles {
     public Drawable getDrawable(Context context)
     {
         return context.getDrawable(drawable);
+    }
+    public Tiles next()
+    {
+        if(nr<values().length-1)
+            return withNr(nr+1);
+        else
+            return withNr(0);
     }
     @Override
     public String toString()

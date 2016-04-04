@@ -17,14 +17,14 @@ import android.widget.LinearLayout;
  */
 public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     /*---- Variabler ------------------------------------------------------------*/
-    int tileWidth;
-    int tileHeight;
-    int layoutWidth;
-    int layoutHeight;
+    private int tileWidth;
+    private int tileHeight;
+    private int layoutWidth;
+    private int layoutHeight;
     private int cols=3;
     private int rows=3;
     private PlayField playField;
-    public TileView[] tileViews;
+    private TileView[] tileViews;
     final private LayoutParams layoutParams=new LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -134,8 +134,9 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
         if(v instanceof TileView)
         {
             TileView tv=(TileView) v;
-            Log.i("PlayFieldView.onClick","Hittade en TileView med nr "+tv.nr+": "+tv.tile);
-            tv.tile.next()
+            Log.i("PlayFieldView.onClick","Hittade en TileView med nr "+tv.nr+": "+playField.field[tv.nr]);
+            playField.field[tv.nr]=playField.field[tv.nr].next();
+            tv.setImageDrawable(playField.field[tv.nr].getDrawable(getContext()));
         }
     }
 }

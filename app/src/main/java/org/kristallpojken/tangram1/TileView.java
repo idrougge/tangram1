@@ -17,8 +17,8 @@ public class TileView extends ImageView {
     {
         super(context, null);
         this.setLayoutParams(lp);
-        this.tile=Tiles._270deg;
-        this.setImageDrawable(context.getDrawable(R.drawable.ruta270grd));
+        //this.tile=Tiles._270DEG;
+        //this.setImageDrawable(context.getDrawable(R.drawable.ruta270grd));
     }
     TileView(Tiles tile)
     {
@@ -33,5 +33,6 @@ public class TileView extends ImageView {
         this.tile=tile;
         this.nr=nr;
         this.setImageDrawable(tile.getDrawable(context));
+        this.setPadding(2,2,2,2);
     }
 }

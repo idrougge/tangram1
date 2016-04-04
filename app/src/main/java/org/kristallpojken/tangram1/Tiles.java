@@ -8,10 +8,9 @@ import android.util.Log;
  * Spelet har sex rutor: Tom, ifylld och halvifylld roterad i 90-graderssteg
  */
 public enum Tiles{
-    _empty("︎◻︎",R.drawable.rutatom),_90deg("◥",R.drawable.ruta90grd),
-    _180deg("◢",R.drawable.ruta180grd),_270deg("◣",R.drawable.ruta270grd),
-    _360deg("◤",R.drawable.ruta360grd),_full("█",R.drawable.rutahel);
-    //private final int nr;
+    _EMPTY("︎◻︎",R.drawable.rutatom),_90DEG("◥",R.drawable.ruta90grd),
+    _180DEG("◢",R.drawable.ruta180grd),_270DEG("◣",R.drawable.ruta270grd),
+    _360DEG("◤",R.drawable.ruta360grd),_FULL("█",R.drawable.rutahel);
     //private final String text;
     //private final int drawable;
     private String text;

@@ -12,6 +12,9 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
+    PlayField pf,solvpf;
+    PlayFieldView pfv;
+    SolutionView solvpfv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
                         2,5,5,3,
                         1,5,5,4,
                         0,1,4,0};
-        PlayField pf =new PlayField(puzzle);
-        PlayField solvpf=new PlayField(solution);
+        pf=new PlayField(puzzle);
+        solvpf=new PlayField(solution);
 
         ViewGroup.LayoutParams lp=new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -34,11 +37,17 @@ public class MainActivity extends AppCompatActivity {
         TileView.context=this;              // Lägg in vår kontext i TileView-klassen
         //LinearLayout mainLayout=(LinearLayout)findViewById(R.id.main_layout);
         RelativeLayout mainLayout=(RelativeLayout)findViewById(R.id.main_layout);
-        PlayFieldView pfv=new PlayFieldView(this, mainLayout, pf);
+        pfv=new PlayFieldView(this, mainLayout, pf);
         addContentView(pfv,lp);
         // Kanske ska lösningen läggas i ett Fragment?
-        SolutionView solvpfv=new SolutionView(this,mainLayout,solvpf);
-        addContentView(solvpfv,lp);
-        pfv.setVisibility(ViewGroup.GONE);
+        solvpfv=new SolutionView(this,mainLayout,solvpf);
+        addContentView(solvpfv, lp);
+        //pfv.setVisibility(ViewGroup.GONE);
+    }
+
+    public void showSolution(View v)
+    {
+        Log.i("showSolution","Visar lösning");
+        solvpfv.setVisibility(ViewGroup.VISIBLE);
     }
 }

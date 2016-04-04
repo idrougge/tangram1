@@ -7,6 +7,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     PlayField pf,solvpf;
     PlayFieldView pfv;
     SolutionView solvpfv;
+    Button showButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +44,31 @@ public class MainActivity extends AppCompatActivity {
         // Kanske ska lösningen läggas i ett Fragment?
         solvpfv=new SolutionView(this,mainLayout,solvpf);
         addContentView(solvpfv, lp);
-        //pfv.setVisibility(ViewGroup.GONE);
+        solvpfv.setVisibility(ViewGroup.GONE);
+        showButton=(Button)findViewById(R.id.showButton);
     }
 
-    public void showSolution(View v)
-    {
-        Log.i("showSolution","Visar lösning");
-        solvpfv.setVisibility(ViewGroup.VISIBLE);
+    public void showSolution(View v) {
+        switch(pfv.getVisibility())
+        {
+            case ViewGroup.VISIBLE:
+                Log.i("showSolution","Visar lösning");
+                pfv.setVisibility(ViewGroup.INVISIBLE);
+                solvpfv.setVisibility(ViewGroup.VISIBLE);
+                showButton.setText(R.string.hide_solution);
+                break;
+            case ViewGroup.INVISIBLE:
+                Log.i("showSolution","Gömmer lösning");
+                solvpfv.setVisibility(ViewGroup.GONE);
+                pfv.setVisibility(ViewGroup.VISIBLE);
+                showButton.setText(R.string.show_solution);
+                break;
+        }
+        if(pf.equals(solvpf))
+        {
+            Log.i("equals","Du vann!");
+            showButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        }
+        else Log.i("equals","ej lika");
     }
 }

@@ -25,6 +25,7 @@ public class SolutionView extends PlayFieldView implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         Log.i("SolutionView.onClick", "Gömmer lösningen");
-        this.setVisibility(GONE);
+        //this.setVisibility(GONE);
+        ((MainActivity)getContext()).showSolution(null);
     }
 }

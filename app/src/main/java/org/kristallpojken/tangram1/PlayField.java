@@ -39,7 +39,27 @@ public class PlayField {
         }
         cols=rows=(int)Math.sqrt(tiles.length);
     }
-
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(!(obj instanceof PlayField))
+        {
+            Log.i(getClass().getSimpleName()+".equals","Jämförelse mot annan typ av objekt");
+            return false;
+        }
+        if(field.length!=((PlayField) obj).field.length)
+        {
+            Log.i(getClass().getSimpleName()+".equals","Objekten är olika stora");
+            return false;
+        }
+        PlayField that=(PlayField) obj;
+        for (int i = 0; i < field.length-1; i++)
+        {
+            if(field[i]!=that.field[i])
+                return false;
+        }
+        return true;
+    }
     @Override
     public String toString() {
         StringBuilder str=new StringBuilder();

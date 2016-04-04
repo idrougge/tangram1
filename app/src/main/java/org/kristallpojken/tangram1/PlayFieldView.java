@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 /**
  * Skapar layout för rutnätet där pusselbitarna läggs ut
  */
-public class PlayFieldView extends ViewGroup{
+public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     /*---- Variabler ------------------------------------------------------------*/
     int tileWidth;
     int tileHeight;
@@ -23,7 +23,8 @@ public class PlayFieldView extends ViewGroup{
     int layoutHeight;
     private int cols=3;
     private int rows=3;
-    PlayField playField;
+    private PlayField playField;
+    public TileView[] tileViews;
     final private LayoutParams layoutParams=new LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -40,14 +41,18 @@ public class PlayFieldView extends ViewGroup{
     {
         super(context);
         playField=pf;
+        tileViews=new TileView[pf.field.length];
         cols=pf.cols;
         rows=pf.rows;
         Log.i("PlayFieldView","Skapar spelplan med storlek "+cols+"x"+rows+" rutor");
         this.setLayoutParams(layoutParams);
         this.setPadding(20,20,20,20);
-        for(int i=0;i<pf.field.length;i++)
+        for(int i=0;i<playField.field.length;i++)
         {
-            addView(new TileView(pf.field[i]));
+            //addView(new TileView(pf.field[i]));
+            tileViews[i]=new TileView(playField.field[i],i);
+            tileViews[i].setOnClickListener(this);
+            addView(tileViews[i]);
         }
     }
     /*---- Metoder ------------------------------------------------------------*/
@@ -70,6 +75,7 @@ public class PlayFieldView extends ViewGroup{
                 top+=tileWidth;
             }
             TileView child=(TileView)getChildAt(i);
+            /*
             child.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -96,12 +102,17 @@ public class PlayFieldView extends ViewGroup{
                     //newTile=Tiles.withNr(newTile.nr()+1);
                     newTile=newTile.next();
                     Log.i("PlayFieldView", "Barnet blev "+newTile);
-                    tile.setImageDrawable(newTile.getDrawable(getContext()));
-                    playField.field[tilenr]=newTile;
+                    //tile.setImageDrawable(newTile.getDrawable(getContext()));
+                    tile.tile.cycle(); // Det här räcker nog inte.
+                                                // Det här pekar bara om Tiles-pekaren i denna TileView
+                                                // och ändrar inte värdet i den ursprungliga Tiles-instansen
+                                                // som delades av TileView och PlayField
+                    //playField.field[tilenr]=newTile;
                     //tile.setImageDrawable(playField.field[tilenr].getDrawable())
                     //tile.setImageDrawable(getContext().getDrawable(R.drawable.rutahel));
                 }
             });
+            */
             Log.i("onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
             child.layout(tileLeft, top, tileLeft += tileWidth, top + tileHeight);
         }
@@ -116,5 +127,15 @@ public class PlayFieldView extends ViewGroup{
         tileWidth=layoutWidth/cols;
         tileHeight=tileWidth;
         Log.i("onMeasure","Det finns "+cols+" rutor per rad och deras storlek är "+tileWidth);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v instanceof TileView)
+        {
+            TileView tv=(TileView) v;
+            Log.i("PlayFieldView.onClick","Hittade en TileView med nr "+tv.nr+": "+tv.tile);
+            tv.tile.next()
+        }
     }
 }

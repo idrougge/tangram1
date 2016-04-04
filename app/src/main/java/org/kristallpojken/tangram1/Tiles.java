@@ -7,13 +7,16 @@ import android.util.Log;
 /**
  * Spelet har sex rutor: Tom, ifylld och halvifylld roterad i 90-graderssteg
  */
-public enum Tiles {
-    _empty(0,"︎◻︎",R.drawable.rutatom),_90deg(1,"◥",R.drawable.ruta90grd),
-    _180deg(2,"◢",R.drawable.ruta180grd),_270deg(3,"◣",R.drawable.ruta270grd),
-    _360deg(4,"◤",R.drawable.ruta360grd),_full(5,"█",R.drawable.rutahel);
-    private final int nr;
-    private final String text;
-    private final int drawable;
+public enum Tiles{
+    _empty("︎◻︎",R.drawable.rutatom),_90deg("◥",R.drawable.ruta90grd),
+    _180deg("◢",R.drawable.ruta180grd),_270deg("◣",R.drawable.ruta270grd),
+    _360deg("◤",R.drawable.ruta360grd),_full("█",R.drawable.rutahel);
+    //private final int nr;
+    //private final String text;
+    //private final int drawable;
+    private String text;
+    private int drawable;
+    // Nedanstående statiska block är för att kunna hämta med withNr()
     public static Tiles[] tiles = new Tiles[Tiles.values().length];
     static{
         int i=0;
@@ -22,15 +25,16 @@ public enum Tiles {
             tiles[i++]=tile;
         }
     }
-    Tiles(int nr, String text,int drawable)
+    Tiles(String text, int drawable)
     {
-        this.nr=nr;
         this.text=text;
         this.drawable=drawable;
     }
     public int nr()
     {
-        return nr;
+        // Här borde kan kunna använda ordinal()
+        //return nr;
+        return ordinal();
     }
     public String text()
     {
@@ -50,14 +54,20 @@ public enum Tiles {
     }
     public Tiles next()
     {
-        if(nr<values().length-1)
-            return withNr(nr+1);
+        if(ordinal()<values().length-1)
+            return withNr(ordinal()+1);
         else
             return withNr(0);
+    }
+    public void cycle()
+    {
+        //nr++;
+        withNr(ordinal()+1);
+        Log.i("Tiles",toString());
     }
     @Override
     public String toString()
     {
-        return "Ruta med nr "+nr+": "+text;
+        return "Ruta med nr "+ordinal()+": "+text;
     }
 }

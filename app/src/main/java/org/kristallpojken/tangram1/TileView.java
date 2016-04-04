@@ -9,7 +9,8 @@ import android.widget.ImageView;
  */
 public class TileView extends ImageView {
     public static Context context;
-    public Tiles tile;
+    public Tiles tile;              // Kanske behövs ingen Tiles-referens här?
+    public int nr;
     private ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     TileView()
@@ -24,6 +25,13 @@ public class TileView extends ImageView {
         this();
         this.tile=tile;
         //this.setImageDrawable(context.getDrawable(R.drawable.rutahel));
+        this.setImageDrawable(tile.getDrawable(context));
+    }
+    TileView(Tiles tile, int nr)    // Konstruktor med nummer
+    {
+        this();
+        this.tile=tile;
+        this.nr=nr;
         this.setImageDrawable(tile.getDrawable(context));
     }
 }

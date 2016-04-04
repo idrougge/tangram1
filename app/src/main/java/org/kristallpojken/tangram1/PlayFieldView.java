@@ -44,7 +44,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
         tileViews=new TileView[pf.field.length];
         cols=pf.cols;
         rows=pf.rows;
-        Log.i("PlayFieldView","Skapar spelplan med storlek "+cols+"x"+rows+" rutor");
+        Log.i(getClass().getSimpleName(),"Skapar spelplan med storlek "+cols+"x"+rows+" rutor");
         this.setLayoutParams(layoutParams);
         this.setPadding(20,20,20,20);
         for(int i=0;i<playField.field.length;i++)
@@ -59,15 +59,15 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom)
     {
-        Log.i("onLayout","onLayout anropades med argument "+changed+","+left+","+top+","+right+","+bottom);
+        Log.i(getClass().getSimpleName()+"onLayout","onLayout anropades med argument "+changed+","+left+","+top+","+right+","+bottom);
         layoutWidth=this.getMeasuredWidth()-this.getPaddingLeft()-this.getPaddingRight();
         layoutHeight=this.getMeasuredHeight()-this.getPaddingTop()-this.getPaddingBottom();
         top+=getPaddingTop();
-        Log.i("onLayout","PlayFieldView har storlek "+layoutWidth+"x"+layoutHeight);
+        Log.i(getClass().getSimpleName()+"onLayout","PlayFieldView har storlek "+layoutWidth+"x"+layoutHeight);
         int childCount=getChildCount();
         tileHeight=tileWidth=layoutWidth/cols;
         int tileLeft=left+getPaddingLeft();
-        Log.i("onLayout", "Hittade " + childCount + " barn");
+        Log.i(getClass().getSimpleName()+"onLayout", "Hittade " + childCount + " barn");
         for(int i=0; i<childCount; i++) {
             if( (i>0) && (i % cols == 0) )
             {
@@ -75,45 +75,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
                 top+=tileWidth;
             }
             TileView child=(TileView)getChildAt(i);
-            /*
-            child.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TileView tile=(TileView)v;
-                    Log.i("PlayFieldView", "Mottog ett klick");
-                    PlayFieldView pfv=(PlayFieldView)tile.getParent();
-                    Log.i("PlayFieldView", "Identifierade modern med "+pfv.getChildCount()+" barn");
-                    int tilenr=-1;
-                    for(int i=0;i<pfv.getChildCount();i++)
-                    {
-                        Log.i("PlayFieldView", "Letar efter barnet... "+i);
-                        if(pfv.getChildAt(i)==tile)
-                        {
-                            Log.i("PlayFieldView", "Hittade barnet på nr "+i);
-                            tilenr=i;
-                            break;
-                        }
-                        //Log.e("PlayFieldView", "Hittade inte barnet!");
-                    }
-                    Log.i("PlayFieldView", "Hittade barnet på nr " + tilenr);
-                    //tile.setImageDrawable(playField.field[tilenr+1].getDrawable(getContext()));
-                    Tiles newTile=playField.field[tilenr];
-                    Log.i("PlayFieldView", "Barnet är "+newTile);
-                    //newTile=Tiles.withNr(newTile.nr()+1);
-                    newTile=newTile.next();
-                    Log.i("PlayFieldView", "Barnet blev "+newTile);
-                    //tile.setImageDrawable(newTile.getDrawable(getContext()));
-                    tile.tile.cycle(); // Det här räcker nog inte.
-                                                // Det här pekar bara om Tiles-pekaren i denna TileView
-                                                // och ändrar inte värdet i den ursprungliga Tiles-instansen
-                                                // som delades av TileView och PlayField
-                    //playField.field[tilenr]=newTile;
-                    //tile.setImageDrawable(playField.field[tilenr].getDrawable())
-                    //tile.setImageDrawable(getContext().getDrawable(R.drawable.rutahel));
-                }
-            });
-            */
-            Log.i("onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
+            Log.i(getClass().getSimpleName()+".onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
             child.layout(tileLeft, top, tileLeft += tileWidth, top + tileHeight);
         }
     }
@@ -123,10 +85,10 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         layoutWidth=this.getMeasuredWidth();
         layoutHeight=this.getMeasuredHeight();
-        Log.i("onMeasure","MainLayout har storlek "+layoutWidth+"x"+layoutHeight);
+        Log.i(getClass().getSimpleName()+"onMeasure","MainLayout har storlek "+layoutWidth+"x"+layoutHeight);
         tileWidth=layoutWidth/cols;
         tileHeight=tileWidth;
-        Log.i("onMeasure","Det finns "+cols+" rutor per rad och deras storlek är "+tileWidth);
+        Log.i(getClass().getSimpleName()+"onMeasure","Det finns "+cols+" rutor per rad och deras storlek är "+tileWidth);
     }
 
     @Override
@@ -134,9 +96,9 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
         if(v instanceof TileView)
         {
             TileView tv=(TileView) v;
-            Log.i("PlayFieldView.onClick","Hittade en TileView med nr "+tv.nr+": "+playField.field[tv.nr]);
+            Log.i(getClass().getSimpleName()+".onClick","Hittade en TileView med nr "+tv.nr+": "+playField.field[tv.nr]);
             playField.field[tv.nr]=playField.field[tv.nr].next();
-            tv.setImageDrawable(playField.field[tv.nr].getDrawable(getContext()));
+            tv.setImageDrawable(playField.field[tv.nr].getDrawable(tv.context));
         }
     }
 }

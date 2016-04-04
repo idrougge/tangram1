@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 /**
  * Skapar layout för rutnätet där pusselbitarna läggs ut
@@ -59,15 +60,18 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom)
     {
-        Log.i(getClass().getSimpleName()+"onLayout","onLayout anropades med argument "+changed+","+left+","+top+","+right+","+bottom);
+        Log.i(getClass().getSimpleName()+".onLayout","onLayout anropades med argument "+changed+","+left+","+top+","+right+","+bottom);
         layoutWidth=this.getMeasuredWidth()-this.getPaddingLeft()-this.getPaddingRight();
         layoutHeight=this.getMeasuredHeight()-this.getPaddingTop()-this.getPaddingBottom();
         top+=getPaddingTop();
-        Log.i(getClass().getSimpleName()+"onLayout","PlayFieldView har storlek "+layoutWidth+"x"+layoutHeight);
+        Log.i(getClass().getSimpleName()+".onLayout","PlayFieldView har storlek "+layoutWidth+"x"+layoutHeight);
         int childCount=getChildCount();
-        tileHeight=tileWidth=layoutWidth/cols;
+        if (layoutWidth<layoutHeight)
+            tileHeight=tileWidth=layoutWidth/cols;
+        else
+            tileWidth=tileHeight=layoutHeight/rows;
         int tileLeft=left+getPaddingLeft();
-        Log.i(getClass().getSimpleName()+"onLayout", "Hittade " + childCount + " barn");
+        Log.i(getClass().getSimpleName()+".onLayout", "Hittade " + childCount + " barn");
         for(int i=0; i<childCount; i++) {
             if( (i>0) && (i % cols == 0) )
             {
@@ -99,6 +103,12 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
             Log.i(getClass().getSimpleName()+".onClick","Hittade en TileView med nr "+tv.nr+": "+playField.field[tv.nr]);
             playField.field[tv.nr]=playField.field[tv.nr].next();
             tv.setImageDrawable(playField.field[tv.nr].getDrawable(tv.context));
+            if(Tangram.pf.equals(Tangram.solvpf))
+            {
+                Log.i(getClass().getSimpleName()+".onClick","Du vann!");
+                Toast.makeText(getContext(),"Du vann!",Toast.LENGTH_LONG).show();
+            }
+            //else Log.i(getClass().getSimpleName()+".onClick","Du vann inte!");
         }
     }
 }

@@ -13,16 +13,14 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    PlayField pf,solvpf;
-    PlayFieldView pfv;
-    SolutionView solvpfv;
     Button showButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         /*---------------------------------------------*/
-        int puzzle[]={1,2,3,4,
+        Tangram tangram=new Tangram(this);
+/*        int puzzle[]={1,2,3,4,
                       5,0,5,4,
                       3,2,2,1,
                       5,2,3,4};
@@ -44,11 +42,12 @@ public class MainActivity extends AppCompatActivity {
         // Kanske ska lösningen läggas i ett Fragment?
         solvpfv=new SolutionView(this,mainLayout,solvpf);
         addContentView(solvpfv, lp);
-        solvpfv.setVisibility(ViewGroup.GONE);
+        solvpfv.setVisibility(ViewGroup.GONE);*/
         showButton=(Button)findViewById(R.id.showButton);
     }
 
     public void showSolution(View v) {
+    /*
         switch(pfv.getVisibility())
         {
             case ViewGroup.VISIBLE:
@@ -70,5 +69,6 @@ public class MainActivity extends AppCompatActivity {
             showButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         }
         else Log.i("equals","ej lika");
+        */
     }
 }

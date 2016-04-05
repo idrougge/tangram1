@@ -40,12 +40,11 @@ public class Tangram {
         ViewGroup.LayoutParams lp=new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        TileView.context=context;              // Lägg in vår kontext i TileView-klassen
         RelativeLayout mainLayout=(RelativeLayout)parent.findViewById(R.id.main_layout);
-        pfv=new PlayFieldView(context, mainLayout, pf);
+        pfv=new PlayFieldView(context, mainLayout, this, R.color.colorPuzzle, pf);
         parent.addContentView(pfv, lp);
         // Kanske ska lösningen läggas i ett Fragment?
-        solvpfv=new SolutionView(context,mainLayout,solvpf);
+        solvpfv=new SolutionView(context,mainLayout,this,R.color.colorSolution,solvpf);
         solvpfv.setVisibility(ViewGroup.GONE);
         parent.addContentView(solvpfv, lp);
         showButton=(Button)parent.findViewById(R.id.showButton);

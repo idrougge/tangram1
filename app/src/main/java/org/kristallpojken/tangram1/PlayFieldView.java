@@ -24,6 +24,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     private int layoutHeight;
     private int cols=3;
     private int rows=3;
+    private Tangram tangram;
     private PlayField playField;
     private TileView[] tileViews;
     private String className=getClass().getSimpleName();
@@ -39,10 +40,13 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     {
         super(context,attrs);
     }
-    PlayFieldView(Context context,View parent,PlayField pf)
+    PlayFieldView(Context context,View parent,Tangram t,int colour,PlayField pf)
     {
         super(context);
+        tangram=t;
         playField=pf;
+        TileView.context=context;                               // Lägg in vår kontext i TileView-klassen
+        TileView.colour=context.getColor(colour);  // Liksom vår färg
         tileViews=new TileView[playField.field.length];
         cols=playField.cols;
         rows=playField.rows;
@@ -110,8 +114,6 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
                 Log.i(className+".onClick", "Du vann!");
                 Toast.makeText(getContext(),R.string.congratulation,Toast.LENGTH_LONG).show();
             }
-            else
-                Log.i(className+".onClick","Du vann inte!");
         }
     }
 }

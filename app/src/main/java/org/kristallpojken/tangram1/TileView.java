@@ -1,6 +1,7 @@
 package org.kristallpojken.tangram1;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -9,6 +10,7 @@ import android.widget.ImageView;
  */
 public class TileView extends ImageView {
     public static Context context;
+    public static int colour;
     public Tiles tile;              // Kanske behövs ingen Tiles-referens här?
     public int nr;
     private ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
@@ -33,6 +35,7 @@ public class TileView extends ImageView {
         this.tile=tile;
         this.nr=nr;
         this.setImageDrawable(tile.getDrawable(context));
-        this.setPadding(2,2,2,2);
+        this.setPadding(2, 2, 2, 2);
+        this.setColorFilter(colour);
     }
 }

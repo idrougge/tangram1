@@ -18,8 +18,8 @@ public class SolutionView extends PlayFieldView implements View.OnClickListener 
         super(context, attrs);
     }
 
-    public SolutionView(Context context, View parent, PlayField pf) {
-        super(context, parent, pf);
+    public SolutionView(Context context, View parent, Tangram t, int c, PlayField pf) {
+        super(context, parent, t, c, pf);
     }
 
     @Override

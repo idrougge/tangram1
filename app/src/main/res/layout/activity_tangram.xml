@@ -7,9 +7,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/tangram_layout">
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TangramView"/>
+        android:background="@android:color/holo_red_light">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:textColor="@android:color/darker_gray"
+            android:paddingRight="24dp"
+            android:text="@string/score_display"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:textColor="@android:color/white"
+            android:id="@+id/score_indicator"
+            android:text="00000"/>
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/show_solution"/>
 </LinearLayout>

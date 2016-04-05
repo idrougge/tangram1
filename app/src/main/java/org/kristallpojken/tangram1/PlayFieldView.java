@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -25,6 +26,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     private int cols=3;
     private int rows=3;
     private Tangram tangram;
+    private Context context;
     private PlayField playField;
     private TileView[] tileViews;
     private String className=getClass().getSimpleName();
@@ -45,12 +47,13 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
         super(context);
         tangram=t;
         playField=pf;
+        this.context=context;
         TileView.context=context;                               // Lägg in vår kontext i TileView-klassen
         TileView.colour=context.getColor(colour);  // Liksom vår färg
         tileViews=new TileView[playField.field.length];
         cols=playField.cols;
         rows=playField.rows;
-        Log.i(className,"Skapar spelplan med storlek "+cols+"x"+rows+" rutor");
+        Log.i(className, "Skapar spelplan med storlek " + cols + "x" + rows + " rutor");
         this.setLayoutParams(layoutParams);
         this.setPadding(20,20,20,20);
         //this.setBackgroundColor(context.getColor(R.color.colorPrimaryDark));
@@ -76,7 +79,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
             tileWidth=tileHeight=layoutHeight/rows;
         int tileLeft=left+getPaddingLeft();
         int childCount=getChildCount();
-        Log.i(className+".onLayout", "Hittade " + childCount + " barn");
+        //Log.i(className+".onLayout", "Hittade " + childCount + " barn");
         for(int i=0; i<childCount; i++) {
             if( (i>0) && (i % cols == 0) )
             {
@@ -84,7 +87,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
                 top+=tileWidth;
             }
             TileView child=(TileView)getChildAt(i);
-            Log.i(className+".onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
+            //Log.i(className+".onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
             child.layout(tileLeft, top, tileLeft += tileWidth, top + tileHeight);
         }
     }
@@ -114,8 +117,9 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
             //Log.i(className+".onClick","solvpf: "+Tangram.solvpf.toString());
             if(tangram.pf.completed())
             {
-                Log.i(className+".onClick", "Du vann!");
+                Log.i(className + ".onClick", "Du vann!");
                 Toast.makeText(getContext(),R.string.congratulation,Toast.LENGTH_LONG).show();
+                ((TangramActivity)context).finish();
             }
         }
     }

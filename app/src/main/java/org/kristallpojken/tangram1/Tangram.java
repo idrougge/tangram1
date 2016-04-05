@@ -24,11 +24,6 @@ public class Tangram {
     Tangram(Context context, AppCompatActivity parent)
     {
         /*
-        int puzzle[]={1,2,3,4,
-                5,0,5,4,
-                3,2,2,1,
-                5,2,3,4};
-        */
         int puzzle[]=  {1,2,3,0,
                         2,5,5,3,
                         1,5,5,4,
@@ -37,6 +32,13 @@ public class Tangram {
                         2,5,5,3,
                         1,5,5,4,
                         0,1,4,0};
+        */
+        int puzzle[]=  {4,5,3,
+                        5,5,5,
+                        1,5,4};
+        int solution[]={2,5,3,
+                        5,5,5,
+                        1,5,4};
         pf=new PlayField(solution,puzzle);
         solvpf=new PlayField(solution,solution);
         ViewGroup.LayoutParams lp=new ViewGroup.LayoutParams(

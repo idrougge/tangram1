@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MainActivity","onCreate()");
         Intent intent=new Intent(this,TangramActivity.class);
         intent.setAction("RUN");
-
+        //onActivityResult();
         startActivity(intent);
         //tangram=new Tangram(this, this);
         showButton=(Button)findViewById(R.id.showButton);

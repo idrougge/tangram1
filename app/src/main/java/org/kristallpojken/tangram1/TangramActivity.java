@@ -13,6 +13,8 @@ import android.widget.TextView;
  * Aktivitet för själva tangrampusslet
  */
 public class TangramActivity extends AppCompatActivity {
+    PlayFieldView pfv;
+    SolutionView solvpfv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,5 +31,10 @@ public class TangramActivity extends AppCompatActivity {
         LinearLayout tangramLayout=(LinearLayout)findViewById(R.id.tangram_layout);
         tangramLayout.addView(tv);
         Tangram tangram=new Tangram(this, this);
+        pfv=new PlayFieldView(this, tangramLayout, tangram, R.color.colorPuzzle, tangram.pf);
+        tangramLayout.addView(pfv);
+        solvpfv=new SolutionView(this,tangramLayout,tangram,R.color.colorSolution,tangram.solvpf);
+        solvpfv.setVisibility(ViewGroup.GONE);
+
     }
 }

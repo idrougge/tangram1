@@ -38,7 +38,7 @@ public class PlayField {
             //field[i]=Tiles.withNr(tiles[i]);
             solution[i]=Tiles.withNr(tiles[i]);
             //Log.i("PlayField","Hämtade ruta "+i+": "+field[i]);
-            Log.i("PlayField","Hämtade ruta "+i+": "+solution[i]);
+            //Log.i("PlayField","Hämtade ruta "+i+": "+solution[i]);
             field[i]=Tiles.withNr(random.nextInt(Tiles.values().length));
         }
         cols=rows=(int)Math.sqrt(tiles.length);

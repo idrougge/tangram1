@@ -67,7 +67,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     {
         Log.i(className+".onLayout","onLayout anropades med argument "+changed+","+left+","+top+","+right+","+bottom);
         layoutWidth=this.getMeasuredWidth()-this.getPaddingLeft()-this.getPaddingRight();
-        layoutHeight=this.getMeasuredHeight()-this.getPaddingTop()-this.getPaddingBottom();
+        layoutHeight=this.getMeasuredHeight()-this.getPaddingTop()-this.getPaddingBottom()-top;
         top+=getPaddingTop();
         Log.i(className+".onLayout","PlayFieldView har storlek "+layoutWidth+"x"+layoutHeight);
         if (layoutWidth<layoutHeight)
@@ -84,7 +84,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
                 top+=tileWidth;
             }
             TileView child=(TileView)getChildAt(i);
-            //Log.i(className+".onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
+            Log.i(className+".onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
             child.layout(tileLeft, top, tileLeft += tileWidth, top + tileHeight);
         }
     }
@@ -95,8 +95,10 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
         layoutWidth=this.getMeasuredWidth();
         layoutHeight=this.getMeasuredHeight();
         Log.i(className+".onMeasure","MainLayout har storlek "+layoutWidth+"x"+layoutHeight);
-        tileWidth=layoutWidth/cols;
-        tileHeight=tileWidth;
+        if(layoutWidth<layoutHeight)
+            tileHeight=tileWidth=layoutWidth/cols;
+        else
+            tileWidth=tileHeight=layoutHeight/rows;
         Log.i(className+".onMeasure","Det finns "+cols+" rutor per rad och deras storlek är "+tileWidth);
     }
 
@@ -110,7 +112,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
             tv.setImageDrawable(playField.field[tv.nr].getDrawable(tv.context));
             //Log.i(className + ".onClick", "    pf: " + Tangram.pf.toString());
             //Log.i(className+".onClick","solvpf: "+Tangram.solvpf.toString());
-            if(Tangram.pf.completed())
+            if(tangram.pf.completed())
             {
                 Log.i(className+".onClick", "Du vann!");
                 Toast.makeText(getContext(),R.string.congratulation,Toast.LENGTH_LONG).show();

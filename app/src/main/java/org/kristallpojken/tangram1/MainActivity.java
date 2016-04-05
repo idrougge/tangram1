@@ -1,5 +1,7 @@
 package org.kristallpojken.tangram1;
 
+import android.content.Intent;
+import android.drm.DrmStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +22,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         /*---------------------------------------------*/
-        tangram=new Tangram(this, this);
+        Log.i("MainActivity","onCreate()");
+        Intent intent=new Intent(this,TangramActivity.class);
+        intent.setAction("RUN");
+
+        startActivity(intent);
+        //tangram=new Tangram(this, this);
         showButton=(Button)findViewById(R.id.showButton);
     }
 

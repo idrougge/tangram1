@@ -1,10 +1,12 @@
 package org.kristallpojken.tangram1;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 /**
@@ -19,7 +21,7 @@ public class Tangram {
     SolutionView solvpfv;
     Button showButton;
     /*---- Konstruktorer ------------------------------------------------------------*/
-    Tangram(Context context, MainActivity parent)
+    Tangram(Context context, AppCompatActivity parent)
     {
         /*
         int puzzle[]={1,2,3,4,
@@ -42,11 +44,13 @@ public class Tangram {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         RelativeLayout mainLayout=(RelativeLayout)parent.findViewById(R.id.main_layout);
         pfv=new PlayFieldView(context, mainLayout, this, R.color.colorPuzzle, pf);
-        parent.addContentView(pfv, lp);
+        //parent.addContentView(pfv, lp);
+        LinearLayout tangramLayout=(LinearLayout)parent.findViewById(R.id.tangram_layout);
+        tangramLayout.addView(pfv);
         // Kanske ska lösningen läggas i ett Fragment?
         solvpfv=new SolutionView(context,mainLayout,this,R.color.colorSolution,solvpf);
         solvpfv.setVisibility(ViewGroup.GONE);
-        parent.addContentView(solvpfv, lp);
+        //parent.addContentView(solvpfv, lp);
         showButton=(Button)parent.findViewById(R.id.showButton);
     }
     public void showSolution(View v)

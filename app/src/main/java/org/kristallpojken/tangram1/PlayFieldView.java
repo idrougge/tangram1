@@ -53,6 +53,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
         Log.i(className,"Skapar spelplan med storlek "+cols+"x"+rows+" rutor");
         this.setLayoutParams(layoutParams);
         this.setPadding(20,20,20,20);
+        //this.setBackgroundColor(context.getColor(R.color.colorPrimaryDark));
         for(int i=0;i<playField.field.length;i++)
         {
             tileViews[i]=new TileView(playField.field[i],i);

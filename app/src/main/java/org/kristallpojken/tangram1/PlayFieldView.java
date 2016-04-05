@@ -26,6 +26,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     private int rows=3;
     private PlayField playField;
     private TileView[] tileViews;
+    private String className=getClass().getSimpleName();
     final private LayoutParams layoutParams=new LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -42,15 +43,14 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     {
         super(context);
         playField=pf;
-        tileViews=new TileView[pf.field.length];
-        cols=pf.cols;
-        rows=pf.rows;
-        Log.i(getClass().getSimpleName(),"Skapar spelplan med storlek "+cols+"x"+rows+" rutor");
+        tileViews=new TileView[playField.field.length];
+        cols=playField.cols;
+        rows=playField.rows;
+        Log.i(className,"Skapar spelplan med storlek "+cols+"x"+rows+" rutor");
         this.setLayoutParams(layoutParams);
         this.setPadding(20,20,20,20);
         for(int i=0;i<playField.field.length;i++)
         {
-            //addView(new TileView(pf.field[i]));
             tileViews[i]=new TileView(playField.field[i],i);
             tileViews[i].setOnClickListener(this);
             addView(tileViews[i]);
@@ -60,18 +60,18 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom)
     {
-        Log.i(getClass().getSimpleName()+".onLayout","onLayout anropades med argument "+changed+","+left+","+top+","+right+","+bottom);
+        Log.i(className+".onLayout","onLayout anropades med argument "+changed+","+left+","+top+","+right+","+bottom);
         layoutWidth=this.getMeasuredWidth()-this.getPaddingLeft()-this.getPaddingRight();
         layoutHeight=this.getMeasuredHeight()-this.getPaddingTop()-this.getPaddingBottom();
         top+=getPaddingTop();
-        Log.i(getClass().getSimpleName()+".onLayout","PlayFieldView har storlek "+layoutWidth+"x"+layoutHeight);
-        int childCount=getChildCount();
+        Log.i(className+".onLayout","PlayFieldView har storlek "+layoutWidth+"x"+layoutHeight);
         if (layoutWidth<layoutHeight)
             tileHeight=tileWidth=layoutWidth/cols;
         else
             tileWidth=tileHeight=layoutHeight/rows;
         int tileLeft=left+getPaddingLeft();
-        Log.i(getClass().getSimpleName()+".onLayout", "Hittade " + childCount + " barn");
+        int childCount=getChildCount();
+        Log.i(className+".onLayout", "Hittade " + childCount + " barn");
         for(int i=0; i<childCount; i++) {
             if( (i>0) && (i % cols == 0) )
             {
@@ -79,7 +79,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
                 top+=tileWidth;
             }
             TileView child=(TileView)getChildAt(i);
-            Log.i(getClass().getSimpleName()+".onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
+            //Log.i(className+".onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
             child.layout(tileLeft, top, tileLeft += tileWidth, top + tileHeight);
         }
     }
@@ -89,10 +89,10 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         layoutWidth=this.getMeasuredWidth();
         layoutHeight=this.getMeasuredHeight();
-        Log.i(getClass().getSimpleName()+"onMeasure","MainLayout har storlek "+layoutWidth+"x"+layoutHeight);
+        Log.i(className+".onMeasure","MainLayout har storlek "+layoutWidth+"x"+layoutHeight);
         tileWidth=layoutWidth/cols;
         tileHeight=tileWidth;
-        Log.i(getClass().getSimpleName()+"onMeasure","Det finns "+cols+" rutor per rad och deras storlek är "+tileWidth);
+        Log.i(className+".onMeasure","Det finns "+cols+" rutor per rad och deras storlek är "+tileWidth);
     }
 
     @Override
@@ -100,15 +100,18 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
         if(v instanceof TileView)
         {
             TileView tv=(TileView) v;
-            Log.i(getClass().getSimpleName()+".onClick","Hittade en TileView med nr "+tv.nr+": "+playField.field[tv.nr]);
+            Log.i(className+".onClick","Hittade en TileView med nr "+tv.nr+": "+playField.field[tv.nr]);
             playField.field[tv.nr]=playField.field[tv.nr].next();
             tv.setImageDrawable(playField.field[tv.nr].getDrawable(tv.context));
-            if(Tangram.pf.equals(Tangram.solvpf))
+            //Log.i(className + ".onClick", "    pf: " + Tangram.pf.toString());
+            //Log.i(className+".onClick","solvpf: "+Tangram.solvpf.toString());
+            if(Tangram.pf.completed())
             {
-                Log.i(getClass().getSimpleName()+".onClick","Du vann!");
-                Toast.makeText(getContext(),"Du vann!",Toast.LENGTH_LONG).show();
+                Log.i(className+".onClick", "Du vann!");
+                Toast.makeText(getContext(),R.string.congratulation,Toast.LENGTH_LONG).show();
             }
-            //else Log.i(getClass().getSimpleName()+".onClick","Du vann inte!");
+            else
+                Log.i(className+".onClick","Du vann inte!");
         }
     }
 }

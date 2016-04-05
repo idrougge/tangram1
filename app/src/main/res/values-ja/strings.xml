@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">タングラム</string>
     <string name="show_solution">出来たやつを見る</string>
+    <string name="congratulation">やったぜ！</string>
+    <string name="hide_solution">パズルに戻る</string>
 </resources>

@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">Tangram</string>
     <string name="show_solution">Visa lösning</string>
+    <string name="hide_solution">Visa pusslet</string>
+    <string name="congratulation">Du klarade pusslet!</string>
 </resources>

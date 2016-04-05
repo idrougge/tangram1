@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="puzzles">
+    <item>012345543210</item>
+</string-array>
+</resources>

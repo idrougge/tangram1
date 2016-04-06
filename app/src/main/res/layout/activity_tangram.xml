@@ -7,11 +7,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/tangram_layout">
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:text="Här ska pusslet ligga"
+        android:layout_below="@+id/score_frame_top"/>
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@android:color/holo_red_light">
+        android:background="@android:color/holo_red_light"
+        android:id="@+id/score_frame_top">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,8 +32,9 @@
             android:textSize="24dp"
             android:textColor="@android:color/white"
             android:id="@+id/score_indicator"
+            android:layout_gravity="right"
             android:text="00000"/>
-    </LinearLayout>
+    </FrameLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

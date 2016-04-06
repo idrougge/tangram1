@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,7 +37,16 @@ public class TangramActivity extends AppCompatActivity {
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         //LinearLayout tangramLayout=(LinearLayout)findViewById(R.id.tangram_layout);
         RelativeLayout tangramLayout=(RelativeLayout)findViewById(R.id.tangram_layout);
-        lp.addRule(RelativeLayout.CENTER_IN_PARENT,RelativeLayout.TRUE);
+        //lp.addRule(RelativeLayout.CENTER_IN_PARENT,RelativeLayout.TRUE);
+        //LinearLayout scoreFrame=(LinearLayout)findViewById(R.id.score_frame);
+        FrameLayout scoreFrame;
+        if((scoreFrame=(FrameLayout)findViewById(R.id.score_frame_top))!=null)
+            lp.addRule(RelativeLayout.BELOW,scoreFrame.getId());
+        //scoreFrame.setId(900);
+        //lp.addRule(RelativeLayout.BELOW,R.id.score_indicator);
+
+        //lp.addRule(RelativeLayout.CENTER_IN_PARENT,tangramLayout.getId());
+        //lp.addRule(RelativeLayout.CENTER_IN_PARENT);
         //lp.addRule(RelativeLayout.ALIGN_END,R.id.score_indicator);
         tangramLayout.addView(tv);
         if(savedInstanceState==null)
@@ -61,7 +71,7 @@ public class TangramActivity extends AppCompatActivity {
                 ((Button)v).setText(R.string.hide_solution);
                 break;
             case ViewGroup.INVISIBLE:
-                Log.i("showSolution","Gömmer lösning");
+                Log.i("showSolution", "Gömmer lösning");
                 solvpfv.setVisibility(ViewGroup.GONE);
                 pfv.setVisibility(ViewGroup.VISIBLE);
                 ((Button)v).setText(R.string.show_solution);

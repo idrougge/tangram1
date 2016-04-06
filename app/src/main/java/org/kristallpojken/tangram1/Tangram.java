@@ -47,14 +47,5 @@ public class Tangram implements Serializable{
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         RelativeLayout mainLayout=(RelativeLayout)parent.findViewById(R.id.main_layout);
-        //pfv=new PlayFieldView(context, mainLayout, this, R.color.colorPuzzle, pf);
-        //parent.addContentView(pfv, lp);
-        //LinearLayout tangramLayout=(LinearLayout)parent.findViewById(R.id.tangram_layout);
-        //tangramLayout.addView(pfv);
-        // Kanske ska lösningen läggas i ett Fragment?
-        //solvpfv=new SolutionView(context,mainLayout,this,R.color.colorSolution,solvpf);
-        //solvpfv.setVisibility(ViewGroup.GONE);
-        //parent.addContentView(solvpfv, lp);
-        //showButton=(Button)parent.findViewById(R.id.show_solution_button);
     }
 }

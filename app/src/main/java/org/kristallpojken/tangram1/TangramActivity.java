@@ -35,19 +35,10 @@ public class TangramActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        //LinearLayout tangramLayout=(LinearLayout)findViewById(R.id.tangram_layout);
         RelativeLayout tangramLayout=(RelativeLayout)findViewById(R.id.tangram_layout);
-        //lp.addRule(RelativeLayout.CENTER_IN_PARENT,RelativeLayout.TRUE);
-        //LinearLayout scoreFrame=(LinearLayout)findViewById(R.id.score_frame);
         FrameLayout scoreFrame;
         if((scoreFrame=(FrameLayout)findViewById(R.id.score_frame_top))!=null)
             lp.addRule(RelativeLayout.BELOW,scoreFrame.getId());
-        //scoreFrame.setId(900);
-        //lp.addRule(RelativeLayout.BELOW,R.id.score_indicator);
-
-        //lp.addRule(RelativeLayout.CENTER_IN_PARENT,tangramLayout.getId());
-        //lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-        //lp.addRule(RelativeLayout.ALIGN_END,R.id.score_indicator);
         tangramLayout.addView(tv);
         if(savedInstanceState==null)
             tangram = new Tangram(this, this);

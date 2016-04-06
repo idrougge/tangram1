@@ -4,4 +4,7 @@
     <string name="show_solution">出来たやつを見る</string>
     <string name="congratulation">やったぜ！</string>
     <string name="hide_solution">パズルに戻る</string>
+    <string name="play_game">スタート</string>
+    <string name="points">点</string>
+    <string name="score_display">スコア</string>
 </resources>

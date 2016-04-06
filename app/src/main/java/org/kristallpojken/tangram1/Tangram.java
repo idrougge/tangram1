@@ -9,12 +9,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import java.io.Serializable;
+
 /**
  * 2016-04-04.
  * Huvudklass för att hantera tangrampussel
  * Innehåller två instanser av pussel: ett att lägga och ett med lösningen
  */
-public class Tangram {
+public class Tangram implements Serializable{
     /*---- Variabler ------------------------------------------------------------*/
     PlayField pf,solvpf;
     PlayFieldView pfv;

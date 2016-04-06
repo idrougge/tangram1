@@ -13,4 +13,11 @@
         android:id="@+id/showButton"
         android:onClick="showSolution"
         android:text="@string/show_solution"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/play_button"
+        android:onClick="play"
+        android:text="@string/play_game"/>
 </RelativeLayout>

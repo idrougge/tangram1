@@ -4,4 +4,7 @@
     <string name="show_solution">Visa lösning</string>
     <string name="hide_solution">Visa pusslet</string>
     <string name="congratulation">Du klarade pusslet!</string>
+    <string name="play_game">Starta spelet</string>
+    <string name="points">poäng</string>
+    <string name="score_display">Poäng:</string>
 </resources>

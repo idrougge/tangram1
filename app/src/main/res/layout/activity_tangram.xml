@@ -31,5 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/show_solution"/>
+        android:text="@string/show_solution"
+        android:id="@+id/show_solution_button"
+        android:onClick="showSolution"/>
 </RelativeLayout>

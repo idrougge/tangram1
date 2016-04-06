@@ -55,24 +55,6 @@ public class Tangram implements Serializable{
         //solvpfv=new SolutionView(context,mainLayout,this,R.color.colorSolution,solvpf);
         //solvpfv.setVisibility(ViewGroup.GONE);
         //parent.addContentView(solvpfv, lp);
-        showButton=(Button)parent.findViewById(R.id.showButton);
-    }
-    public void showSolution(View v)
-    {
-        switch(pfv.getVisibility())
-        {
-            case ViewGroup.VISIBLE:
-                Log.i("showSolution","Visar lösning");
-                pfv.setVisibility(ViewGroup.INVISIBLE);
-                solvpfv.setVisibility(ViewGroup.VISIBLE);
-                showButton.setText(R.string.hide_solution);
-                break;
-            case ViewGroup.INVISIBLE:
-                Log.i("showSolution","Gömmer lösning");
-                solvpfv.setVisibility(ViewGroup.GONE);
-                pfv.setVisibility(ViewGroup.VISIBLE);
-                showButton.setText(R.string.show_solution);
-                break;
-        }
+        //showButton=(Button)parent.findViewById(R.id.show_solution_button);
     }
 }

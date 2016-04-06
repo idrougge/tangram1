@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -46,7 +47,26 @@ public class TangramActivity extends AppCompatActivity {
         tangramLayout.addView(pfv,lp);
         solvpfv=new SolutionView(this,tangramLayout,tangram,R.color.colorSolution,tangram.solvpf);
         solvpfv.setVisibility(ViewGroup.GONE);
+        tangramLayout.addView(solvpfv,lp);
+    }
 
+    public void showSolution(View v)
+    {
+        switch(pfv.getVisibility())
+        {
+            case ViewGroup.VISIBLE:
+                Log.i("showSolution","Visar lösning");
+                pfv.setVisibility(ViewGroup.INVISIBLE);
+                solvpfv.setVisibility(ViewGroup.VISIBLE);
+                ((Button)v).setText(R.string.hide_solution);
+                break;
+            case ViewGroup.INVISIBLE:
+                Log.i("showSolution","Gömmer lösning");
+                solvpfv.setVisibility(ViewGroup.GONE);
+                pfv.setVisibility(ViewGroup.VISIBLE);
+                ((Button)v).setText(R.string.show_solution);
+                break;
+        }
     }
     @Override
     public void onStop()    // Körs när telefonen vrids

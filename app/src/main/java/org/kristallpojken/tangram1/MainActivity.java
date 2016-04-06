@@ -28,11 +28,11 @@ public class MainActivity extends AppCompatActivity {
         //onActivityResult();
         startActivity(intent);
         //tangram=new Tangram(this, this);
-        showButton=(Button)findViewById(R.id.showButton);
+        showButton=(Button)findViewById(R.id.showButton_old);
     }
 
     public void showSolution(View v) {
-        tangram.showSolution(v);
+        //tangram.showSolution(v);
     }
 
     public void play(View v) {

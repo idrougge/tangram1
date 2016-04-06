@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:id="@+id/showButton"
+        android:id="@+id/showButton_old"
         android:onClick="showSolution"
         android:text="@string/show_solution"/>
     <Button

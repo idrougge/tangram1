@@ -25,6 +25,7 @@
             android:textSize="24dp"
             android:textColor="@android:color/darker_gray"
             android:paddingRight="24dp"
+            android:id="@+id/score_text"
             android:text="@string/score_display"/>
         <TextView
             android:layout_width="wrap_content"

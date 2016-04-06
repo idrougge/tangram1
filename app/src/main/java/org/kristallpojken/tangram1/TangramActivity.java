@@ -2,6 +2,7 @@ package org.kristallpojken.tangram1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Aktivitet för själva tangrampusslet
@@ -19,6 +21,7 @@ public class TangramActivity extends AppCompatActivity {
     PlayFieldView pfv;
     SolutionView solvpfv;
     private Tangram tangram;
+    private GameTimer timer;
     private String className=getClass().getSimpleName();
 
     @Override
@@ -35,7 +38,7 @@ public class TangramActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        RelativeLayout tangramLayout=(RelativeLayout)findViewById(R.id.tangram_layout);
+        final RelativeLayout tangramLayout=(RelativeLayout)findViewById(R.id.tangram_layout);
         FrameLayout scoreFrame;
         if((scoreFrame=(FrameLayout)findViewById(R.id.score_frame_top))!=null)
             lp.addRule(RelativeLayout.BELOW,scoreFrame.getId());
@@ -48,7 +51,27 @@ public class TangramActivity extends AppCompatActivity {
         tangramLayout.addView(pfv,lp);
         solvpfv=new SolutionView(this,tangramLayout,tangram,R.color.colorSolution,tangram.solvpf);
         solvpfv.setVisibility(ViewGroup.GONE);
-        tangramLayout.addView(solvpfv,lp);
+        tangramLayout.addView(solvpfv, lp);
+        //timer=new GameTimer(this,tangramLayout,24000,1000);
+        timer=new GameTimer(this,tv,10,1);
+        /*
+        timer=new CountDownTimer(25000,1000) {
+            TextView tv=(TextView)tangramLayout.findViewById(R.id.score_text);
+            //TextView tv=(TangramActivity)getParent().tv;
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tv.setText("Tid: "+millisUntilFinished/1000);
+            }
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(getApplicationContext(), R.string.time_is_out, Toast.LENGTH_LONG).show();
+                TangramActivity.this.finish();
+
+            }
+        };
+        */
+        timer.start();
     }
 
     public void showSolution(View v)
@@ -82,7 +105,8 @@ public class TangramActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         Log.i(className, "onSaveInstanceState()");
         outState.putString("pf", tangram.pf.toString());
-        outState.putSerializable("tangram",tangram);
+        outState.putSerializable("tangram", tangram);
+        outState.putLong("time", timer.time);
     }
     @Override
     public void onResume()

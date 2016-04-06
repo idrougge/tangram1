@@ -7,4 +7,5 @@
     <string name="play_game">Starta spelet</string>
     <string name="points">poäng</string>
     <string name="score_display">Poäng:</string>
+    <string name="time_is_out">Tiden är ute!</string>
 </resources>

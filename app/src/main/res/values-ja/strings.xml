@@ -7,4 +7,5 @@
     <string name="play_game">スタート</string>
     <string name="points">点</string>
     <string name="score_display">スコア</string>
+    <string name="time_is_out">時間切れ！</string>
 </resources>

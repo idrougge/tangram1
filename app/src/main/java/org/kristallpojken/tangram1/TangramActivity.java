@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -24,15 +25,18 @@ public class TangramActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String action = intent.getAction();
         TextView tv=new TextView(this);
-        tv.setText("Action: "+action);
-        ViewGroup.LayoutParams lp=new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        LinearLayout tangramLayout=(LinearLayout)findViewById(R.id.tangram_layout);
+        tv.setText("Action: " + action);
+        RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        //LinearLayout tangramLayout=(LinearLayout)findViewById(R.id.tangram_layout);
+        RelativeLayout tangramLayout=(RelativeLayout)findViewById(R.id.tangram_layout);
+        lp.addRule(RelativeLayout.CENTER_IN_PARENT,RelativeLayout.TRUE);
+        //lp.addRule(RelativeLayout.ALIGN_END,R.id.score_indicator);
         tangramLayout.addView(tv);
         Tangram tangram=new Tangram(this, this);
         pfv=new PlayFieldView(this, tangramLayout, tangram, R.color.colorPuzzle, tangram.pf);
-        tangramLayout.addView(pfv);
+        tangramLayout.addView(pfv,lp);
         solvpfv=new SolutionView(this,tangramLayout,tangram,R.color.colorSolution,tangram.solvpf);
         solvpfv.setVisibility(ViewGroup.GONE);
 

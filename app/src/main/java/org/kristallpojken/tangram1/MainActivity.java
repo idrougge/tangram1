@@ -34,4 +34,10 @@ public class MainActivity extends AppCompatActivity {
     public void showSolution(View v) {
         tangram.showSolution(v);
     }
+
+    public void play(View v) {
+        Intent intent=new Intent(this,TangramActivity.class);
+        intent.setAction(Intent.ACTION_VIEW);
+        startActivity(intent);
+    }
 }

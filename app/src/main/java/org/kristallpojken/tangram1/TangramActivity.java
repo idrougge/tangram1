@@ -33,8 +33,8 @@ public class TangramActivity extends AppCompatActivity {
         Log.i("TangramActivity", "onCreate()");
         Intent intent = getIntent();
         String action = intent.getAction();
-        TextView tv=new TextView(this);
-        tv.setText("Action: " + action);
+        //TextView tv=new TextView(this);
+        //tv.setText("Action: " + action);
         TextView scoreView=(TextView)findViewById(R.id.score_indicator);
         RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -43,17 +43,20 @@ public class TangramActivity extends AppCompatActivity {
         FrameLayout scoreFrame;
         if((scoreFrame=(FrameLayout)findViewById(R.id.score_frame_top))!=null)
             lp.addRule(RelativeLayout.BELOW,scoreFrame.getId());
-        tangramLayout.addView(tv);
-        if(savedInstanceState==null)
+        //tangramLayout.addView(tv);
+        if(savedInstanceState==null) {
             tangram = new Tangram(this, this);
-        else
-            tangram=(Tangram)savedInstanceState.getSerializable("tangram");
+            timer=new GameTimer(this,scoreView,60,1);
+        }
+        else {
+            tangram = (Tangram) savedInstanceState.getSerializable("tangram");
+            timer=new GameTimer(this,scoreView,savedInstanceState.getLong("time")/1000,1);
+        }
         pfv=new PlayFieldView(this, tangramLayout, tangram, R.color.colorPuzzle, tangram.pf);
         tangramLayout.addView(pfv,lp);
         solvpfv=new SolutionView(this,tangramLayout,tangram,R.color.colorSolution,tangram.solvpf);
         solvpfv.setVisibility(ViewGroup.GONE);
         tangramLayout.addView(solvpfv, lp);
-        timer=new GameTimer(this,scoreView,60,1);
         timer.start();
     }
 
@@ -74,6 +77,13 @@ public class TangramActivity extends AppCompatActivity {
                 ((Button)v).setText(R.string.show_solution);
                 break;
         }
+    }
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        Log.i(className, "onBackPressed()");
+        timer.cancel();
     }
     @Override
     public void onStop()    // Körs när telefonen vrids

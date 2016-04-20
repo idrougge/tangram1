@@ -24,7 +24,7 @@ public class GameTimer extends CountDownTimer {
     @Override
     public void onTick(long millisUntilFinished) {
         time=millisUntilFinished;
-        window.setText("Tid: "+millisUntilFinished/1000);
+        window.setText(""+millisUntilFinished/1000);
     }
 
     @Override

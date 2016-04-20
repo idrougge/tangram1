@@ -26,7 +26,6 @@ public class TileView extends ImageView {
     {
         this();
         this.tile=tile;
-        //this.setImageDrawable(context.getDrawable(R.drawable.rutahel));
         this.setImageDrawable(tile.getDrawable(context));
     }
     TileView(Tiles tile, int nr)    // Konstruktor med nummer

@@ -35,6 +35,7 @@ public class TangramActivity extends AppCompatActivity {
         String action = intent.getAction();
         TextView tv=new TextView(this);
         tv.setText("Action: " + action);
+        TextView scoreView=(TextView)findViewById(R.id.score_indicator);
         RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -52,25 +53,7 @@ public class TangramActivity extends AppCompatActivity {
         solvpfv=new SolutionView(this,tangramLayout,tangram,R.color.colorSolution,tangram.solvpf);
         solvpfv.setVisibility(ViewGroup.GONE);
         tangramLayout.addView(solvpfv, lp);
-        //timer=new GameTimer(this,tangramLayout,24000,1000);
-        timer=new GameTimer(this,tv,10,1);
-        /*
-        timer=new CountDownTimer(25000,1000) {
-            TextView tv=(TextView)tangramLayout.findViewById(R.id.score_text);
-            //TextView tv=(TangramActivity)getParent().tv;
-            @Override
-            public void onTick(long millisUntilFinished) {
-                tv.setText("Tid: "+millisUntilFinished/1000);
-            }
-
-            @Override
-            public void onFinish() {
-                Toast.makeText(getApplicationContext(), R.string.time_is_out, Toast.LENGTH_LONG).show();
-                TangramActivity.this.finish();
-
-            }
-        };
-        */
+        timer=new GameTimer(this,scoreView,60,1);
         timer.start();
     }
 

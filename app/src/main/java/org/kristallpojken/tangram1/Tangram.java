@@ -36,14 +36,13 @@ public class Tangram implements Serializable{
         assets=context.getAssets();
         try {
             stream=assets.open("puzzles.txt");
-            Log.i("Tangram.init","Pusselfilen hittades");
         } catch (IOException e) {
             if(assets==null) Log.e("Tangram.init","Kunde inte öppna Assets!");
             Log.e("Tangram.init", "Fel vid öppning av fil");
-            e.printStackTrace();
+            parent.finish();
         }
         //loadPuzzle();
-        nextPuzzle();
+        //nextPuzzle();
         ViewGroup.LayoutParams lp=new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -58,6 +57,7 @@ public class Tangram implements Serializable{
                 pf=new PlayField(nextPuzzle,nextPuzzle);
             else
                 pf=new PlayField(nextPuzzle);
+
             solvpf=new PlayField(nextPuzzle,nextPuzzle);
             return true;
         }
@@ -88,7 +88,6 @@ public class Tangram implements Serializable{
             Log.i("Tangram.loadPuzzle","Pusslet har mått "+cols+"x"+rows+" ("+puzzle.length+")");
             for (int tile = 0; tile < cols*rows; ) {
                 b=stream.read();
-                Log.i("Tangram.loadPuzzle","b="+b);
                 if(b==-1)
                     return null;
                 else

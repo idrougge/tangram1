@@ -1,6 +1,8 @@
 package org.kristallpojken.tangram1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,6 +23,7 @@ public class TangramActivity extends AppCompatActivity {
     SolutionView solvpfv;
     private Tangram tangram;
     private GameTimer timer;
+    private long score=0;
     private String className=getClass().getSimpleName();
     private static RelativeLayout tangramLayout;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,25 +50,28 @@ public class TangramActivity extends AppCompatActivity {
         //tangramLayout.addView(tv);
         if(savedInstanceState==null) {
             tangram = new Tangram(this, this);
-            timer=new GameTimer(this,scoreView,60,1);
+            //timer=new GameTimer(this,scoreView,60,1);
+            nextPuzzle();
         }
         else {
             tangram = (Tangram) savedInstanceState.getSerializable("tangram");
             //tangram.nextPuzzle();
             timer=new GameTimer(this,scoreView,savedInstanceState.getLong("time")/1000,1);
+            pfv=new PlayFieldView(this, tangramLayout, tangram, R.color.colorPuzzle, tangram.pf);
+            tangramLayout.addView(pfv,lp);
+            solvpfv=new SolutionView(this,tangramLayout,tangram,R.color.colorSolution,tangram.solvpf);
+            solvpfv.setVisibility(ViewGroup.GONE);
+            tangramLayout.addView(solvpfv, lp);
+            timer.start();
         }
-        pfv=new PlayFieldView(this, tangramLayout, tangram, R.color.colorPuzzle, tangram.pf);
-        tangramLayout.addView(pfv,lp);
-        solvpfv=new SolutionView(this,tangramLayout,tangram,R.color.colorSolution,tangram.solvpf);
-        solvpfv.setVisibility(ViewGroup.GONE);
-        tangramLayout.addView(solvpfv, lp);
-        timer.start();
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void nextPuzzle()
     {
         if(tangram.nextPuzzle())
         {
+            TextView scoreView=(TextView)findViewById(R.id.score_indicator);
+            timer=new GameTimer(this,scoreView,60,1);
             RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -80,6 +86,7 @@ public class TangramActivity extends AppCompatActivity {
             solvpfv=new SolutionView(this,tangramLayout,tangram,R.color.colorSolution,tangram.solvpf);
             solvpfv.setVisibility(ViewGroup.GONE);
             tangramLayout.addView(solvpfv, lp);
+            timer.start();
         }
         else
         {
@@ -109,16 +116,26 @@ public class TangramActivity extends AppCompatActivity {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void onCompletion() {
         timer.cancel();
-        Log.i(className + ".onCompletion", "Du vann!");
+        Log.i(className + ".onCompletion", "score=" + score);
+        score+=timer.time;
+        Log.i(className + ".onCompletion", "Du vann med poäng "+timer.time);
+
         Toast.makeText(this, R.string.congratulation, Toast.LENGTH_LONG).show();
         //activity.finish();
+        SharedPreferences scoreFile=getPreferences(Context.MODE_PRIVATE);
+        long oldScore=scoreFile.getLong("score",0);
+        Log.i(className + ".onCompletion","Sparad poäng: "+oldScore);
+        if(score>oldScore) {
+            SharedPreferences.Editor editor = scoreFile.edit();
+            editor.putLong("score", score);
+            editor.commit();
+        }
         pfv.getHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 nextPuzzle();
             }
-        }, 5000);
-
+        }, 3000);
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override

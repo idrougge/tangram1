@@ -8,4 +8,6 @@
     <string name="points">poäng</string>
     <string name="score_display">Poäng:</string>
     <string name="time_is_out">Tiden är ute!</string>
+    <string name="tangram_activity_label">Pussel</string>
+    <string name="game_completed">Du klarade alla pussel!</string>
 </resources>

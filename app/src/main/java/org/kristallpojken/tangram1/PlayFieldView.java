@@ -1,17 +1,11 @@
 package org.kristallpojken.tangram1;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 /**
@@ -48,7 +42,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
         tangram=t;
         playField=pf;
         this.context=context;
-        TileView.context=context;                               // Lägg in vår kontext i TileView-klassen
+        TileView.context=context;                  // Lägg in vår kontext i TileView-klassen
         TileView.colour=context.getColor(colour);  // Liksom vår färg
         tileViews=new TileView[playField.field.length];
         cols=playField.cols;
@@ -68,7 +62,7 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom)
     {
-        Log.i(className+".onLayout","onLayout anropades med argument "+changed+","+left+","+top+","+right+","+bottom);
+        Log.i(className + ".onLayout", "onLayout anropades med argument " + changed + "," + left + "," + top + "," + right + "," + bottom);
         layoutWidth=this.getMeasuredWidth()-this.getPaddingLeft()-this.getPaddingRight();
         layoutHeight=this.getMeasuredHeight()-this.getPaddingTop()-this.getPaddingBottom()-top;
         top+=getPaddingTop();
@@ -79,7 +73,6 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
             tileWidth=tileHeight=layoutHeight/rows;
         int tileLeft=left+getPaddingLeft();
         int childCount=getChildCount();
-        //Log.i(className+".onLayout", "Hittade " + childCount + " barn");
         for(int i=0; i<childCount; i++) {
             if( (i>0) && (i % cols == 0) )
             {
@@ -87,7 +80,6 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
                 top+=tileWidth;
             }
             TileView child=(TileView)getChildAt(i);
-            //Log.i(className+".onLayout", "Bearbetar barn nr " + i + " med stl " + tileWidth + " på pos " + tileLeft+"x"+top);
             child.layout(tileLeft, top, tileLeft += tileWidth, top + tileHeight);
         }
     }
@@ -113,15 +105,24 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
             Log.i(className+".onClick","Hittade en TileView med nr "+tv.nr+": "+playField.field[tv.nr]);
             playField.field[tv.nr]=playField.field[tv.nr].next();
             tv.setImageDrawable(playField.field[tv.nr].getDrawable(tv.context));
-            //Log.i(className + ".onClick", "    pf: " + Tangram.pf.toString());
-            //Log.i(className+".onClick","solvpf: "+Tangram.solvpf.toString());
             if(tangram.pf.completed())
             {
-                Log.i(className + ".onClick", "Du vann!");
-                Toast.makeText(getContext(),R.string.congratulation,Toast.LENGTH_LONG).show();
-                //((TangramActivity)context).finish();
-                ((TangramActivity) context).nextPuzzle();
+                ((TangramActivity)context).onCompletion();
             }
         }
+    }
+    public void onCompletion() {
+        final TangramActivity activity=(TangramActivity)context;
+        Log.i(className + ".onClick", "Du vann!");
+        Toast.makeText(context,R.string.congratulation,Toast.LENGTH_LONG).show();
+        //activity.finish();
+        //activity.timer.cancel();
+        getHandler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                activity.nextPuzzle();
+            }
+        }, 5000);
+
     }
 }

@@ -23,6 +23,7 @@ public class TangramActivity extends AppCompatActivity {
     private Tangram tangram;
     private GameTimer timer;
     private String className=getClass().getSimpleName();
+    private static RelativeLayout tangramLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,8 @@ public class TangramActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        final RelativeLayout tangramLayout=(RelativeLayout)findViewById(R.id.tangram_layout);
+        //final RelativeLayout tangramLayout=(RelativeLayout)findViewById(R.id.tangram_layout);
+        tangramLayout=(RelativeLayout)findViewById(R.id.tangram_layout);
         FrameLayout scoreFrame;
         if((scoreFrame=(FrameLayout)findViewById(R.id.score_frame_top))!=null)
             lp.addRule(RelativeLayout.BELOW,scoreFrame.getId());
@@ -50,6 +52,7 @@ public class TangramActivity extends AppCompatActivity {
         }
         else {
             tangram = (Tangram) savedInstanceState.getSerializable("tangram");
+            tangram.nextPuzzle();
             timer=new GameTimer(this,scoreView,savedInstanceState.getLong("time")/1000,1);
         }
         pfv=new PlayFieldView(this, tangramLayout, tangram, R.color.colorPuzzle, tangram.pf);
@@ -60,6 +63,23 @@ public class TangramActivity extends AppCompatActivity {
         timer.start();
     }
 
+    public void nextPuzzle()
+    {
+        if(tangram.nextPuzzle())
+        {
+            RelativeLayout.LayoutParams lp=new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+            //tangramLayout.removeAllViews();
+            tangramLayout.removeView(solvpfv);
+            tangramLayout.removeView(pfv);
+            pfv=new PlayFieldView(this, tangramLayout, tangram, R.color.colorPuzzle, tangram.pf);
+            tangramLayout.addView(pfv,lp);
+            solvpfv=new SolutionView(this,tangramLayout,tangram,R.color.colorSolution,tangram.solvpf);
+            solvpfv.setVisibility(ViewGroup.GONE);
+            tangramLayout.addView(solvpfv, lp);
+        }
+    }
     public void showSolution(View v)
     {
         switch(pfv.getVisibility())

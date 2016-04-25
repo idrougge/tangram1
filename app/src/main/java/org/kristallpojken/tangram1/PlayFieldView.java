@@ -119,7 +119,8 @@ public class PlayFieldView extends ViewGroup implements View.OnClickListener{
             {
                 Log.i(className + ".onClick", "Du vann!");
                 Toast.makeText(getContext(),R.string.congratulation,Toast.LENGTH_LONG).show();
-                ((TangramActivity)context).finish();
+                //((TangramActivity)context).finish();
+                ((TangramActivity) context).nextPuzzle();
             }
         }
     }

@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 public class Tangram implements Serializable{
     /*---- Variabler ------------------------------------------------------------*/
-    static final boolean DEBUG=true;
+    static final boolean DEBUG=false;
     PlayField pf,solvpf;
     PlayFieldView pfv;
     SolutionView solvpfv;

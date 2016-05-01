@@ -11,8 +11,6 @@ public enum Tiles{
     _EMPTY("︎◻︎",R.drawable.rutatom),_90DEG("◥",R.drawable.ruta90grd),
     _180DEG("◢",R.drawable.ruta180grd),_270DEG("◣",R.drawable.ruta270grd),
     _360DEG("◤",R.drawable.ruta360grd),_FULL("█",R.drawable.rutahel);
-    //private final String text;
-    //private final int drawable;
     private String text;
     private int drawable;
     // Nedanstående statiska block är för att kunna hämta med withNr()
